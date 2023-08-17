@@ -59,19 +59,17 @@ int main() {
     showMenu(); 
     int inp;
     scanf("%d", &inp);
-    while (inp != 4) {
-        switch (inp) {
-            case 1 :
-                addTask(file);
-                break;
-            case 2 :
-                showExpense();          
-                return 0;
-            case 3 :
-                totalExpense();
-                break;
-            case 4 :
-                break;
-        }
+    switch (inp) {
+        case 1 :
+            addTask(file);
+            break;
+        case 2 :
+            showExpense();          
+            return 0;
+        case 3 :
+            totalExpense();
+            break;
+        case 4 :
+            break;
     }
 }

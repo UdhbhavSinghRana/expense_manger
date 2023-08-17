@@ -1,0 +1,1 @@
+task: Milk, amount: 33.00, date: 4461225-06-26
