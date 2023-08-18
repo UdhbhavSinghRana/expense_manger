@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<time.h>
 #include<string.h>
+#include<stdlib.h>
 struct Expense {
     char date[11];
     double amount;
@@ -10,16 +11,21 @@ struct Expense {
 void showExpense() {
     FILE *file = fopen("db.txt", "r");
     if (file == NULL) {
-        printf("Error Opening file");
-        return ;
+        perror("Error opening file");
+        return;
     }
-    char buffer[256];
-    
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+
+    char *buffer = NULL;
+    size_t buffer_size = 0;
+
+    while (getline(&buffer, &buffer_size, file) != -1) {
         printf("Line: %s", buffer);
     }
-    
+
+    free(buffer);  
+    fclose(file);
 }
+
 
 void showMenu() {
     printf("===== Expense Manager Menu =====\n");
@@ -50,6 +56,7 @@ void addTask(FILE *file) {
 
 void totalExpense() {
     printf("total");
+    // Todo
 }
 
 int main() {
