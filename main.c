@@ -32,20 +32,30 @@ void showMenu() {
 }
 
 void addTask(FILE *file) {
+    int number_of_items;
+
+    char dateString[20];
     time_t currentTime;
     struct tm *localTime = localtime(&currentTime);
-    char dateString[20];
+
     strftime(dateString, sizeof(dateString), "%Y-%m-%d", localTime);
 
-    struct Expense expenses;
-    printf("task : ");
-    scanf("%s", expenses.task);
-    printf("amount: ");
-    scanf("%lf", &expenses.amount);
+    printf("How many items do you want to add? ");
+    scanf("%d", &number_of_items);
 
-    strcpy(expenses.date, dateString);
-    fprintf(file, "task: %s, amount: %.2lf, date: %s\n",
-            expenses.task, expenses.amount, expenses.date);
+    for (int i = 0; i < number_of_items; ++i) {
+        struct Expense expenses;
+
+        printf("Item purchased: ");
+        scanf("%s", expenses.task);
+
+        printf("Amount: ");
+        scanf("%lf", &expenses.amount);
+
+        strcpy(expenses.date, dateString);
+        fprintf(file, "task: %s, amount: %.2lf, date: %s\n",
+                expenses.task, expenses.amount, expenses.date);
+    }
 }
 
 void totalExpense() {
@@ -54,22 +64,29 @@ void totalExpense() {
 
 int main() {
     FILE *file;
+    char user_input[100];
+    int running = 1;
 
     file = fopen("db.txt", "w+b");
-    showMenu(); 
-    int inp;
-    scanf("%d", &inp);
-    switch (inp) {
-        case 1 :
-            addTask(file);
-            break;
-        case 2 :
-            showExpense();          
-            return 0;
-        case 3 :
-            totalExpense();
-            break;
-        case 4 :
-            break;
+
+
+    while (running) {
+        showMenu();
+        scanf("%s", user_input);
+
+        switch (user_input[0]) {
+            case '1':
+                addTask(file);
+                break;
+            case '2':
+                showExpense();
+                break;
+            case '3':
+                totalExpense();
+                break;
+            case '4':
+                running = 0;
+                break;
+        }
     }
 }
