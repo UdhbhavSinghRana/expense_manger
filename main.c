@@ -2,6 +2,7 @@
 #include<time.h>
 #include<string.h>
 #include<stdlib.h>
+
 struct Expense {
     char date[11];
     double amount;
@@ -9,21 +10,16 @@ struct Expense {
 };
 
 void showExpense() {
-    FILE *file = fopen("db.txt", "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
+    FILE* fPointer; 
+    fPointer = fopen("db.txt", "r");
+    char singleLine[255];
+    struct Expense expenses;
+
+    while (fscanf(fPointer, "task: %99[^,], amount: %lf, date: %10s\n",
+                  expenses.task, &expenses.amount, expenses.date) == 3) {
+        printf("Task: %s, Amount: %.2lf, Date: %s\n",
+               expenses.task, expenses.amount, expenses.date);
     }
-
-    char *buffer = NULL;
-    size_t buffer_size = 0;
-
-    while (getline(&buffer, &buffer_size, file) != -1) {
-        printf("Line: %s", buffer);
-    }
-
-    free(buffer);  
-    fclose(file);
 }
 
 
@@ -96,4 +92,5 @@ int main() {
                 break;
         }
     }
+    printf("%d ", fclose(file));
 }

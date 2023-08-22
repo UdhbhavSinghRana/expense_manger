@@ -1,0 +1,2 @@
+task: milk, amount: 2.00, date: 1970-01-01
+task: water, amount: 2.00, date: 1970-01-01
